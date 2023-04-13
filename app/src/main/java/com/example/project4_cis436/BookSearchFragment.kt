@@ -77,6 +77,7 @@ class BookSearchFragment : Fragment() {
                         val volume: JSONObject = bk.getJSONObject("volumeInfo")
 
                         val bkTitle = volume.optString("title")
+                        Log.i("search", "book title" + bkTitle)
                         val bkAuthors = volume.getJSONArray("authors")
                         val bkdescription = volume.optString("description")
                         val pageCount = volume.optInt("pageCount")
@@ -100,7 +101,7 @@ class BookSearchFragment : Fragment() {
                             bkpic
                         )
 
-
+                        /*
 
                         bookList.add(viewModel)
                         val adapter = recycleView(bookList, this)
@@ -112,7 +113,7 @@ class BookSearchFragment : Fragment() {
                         rView.layoutManager = layoutManager
                         rView.adapter = adapter
 
-
+                            */
 
                         }
 
