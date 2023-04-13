@@ -1,6 +1,5 @@
 package com.example.project4_cis436
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +7,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.project4_cis436.databinding.FragmentInventoryBinding
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.NonDisposableHandle.parent
 
 
- class recycleView (
+class recycleView(
 
 
 
-    private var bookList: ArrayList<BookViewModel>,
-            private var contextt: Context ):
+     private var bookList: ArrayList<BookViewModel>,
+     private var contextt: BookSearchFragment
+ ):
     RecyclerView.Adapter<recycleView.BookViewHolder>(){
 
     override fun onCreateViewHolder(

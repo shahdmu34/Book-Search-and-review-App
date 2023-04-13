@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.volley.Request
 import com.android.volley.Request.Method
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -93,20 +91,23 @@ class BookSearchFragment : Fragment() {
                             }
                         }
 
-                        val bookData = viewModel(
+                        val bookData = bookRecycleVIew(
                             bkTitle,
-                            bkAuthors,
+                            bkAuthorsList,
                             bkdescription,
                             pageCount,
                             pubDay,
                             bkpic
                         )
 
-                        bookList.add(bookData)
+
+
+                        bookList.add(viewModel)
                         val adapter = recycleView(bookList, this)
 
                         val layoutManager = GridLayoutManager(this, 3)
-                        val rView = binding.Rvbooks
+                        //val rView = binding.Rvbooks
+                        val rview = binding.Rvbooks as RecyclerView
 
                         rView.layoutManager = layoutManager
                         rView.adapter = adapter
