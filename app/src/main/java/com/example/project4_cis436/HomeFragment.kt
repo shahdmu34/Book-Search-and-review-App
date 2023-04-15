@@ -29,12 +29,14 @@ class HomeFragment : Fragment() {
 
         val buttonSearch = binding.SearchButton
 
-        buttonSearch.setOnClickListener {
+
+        buttonSearch.setOnClickListener {      //navigation from home to the search bar fragment
             findNavController().navigate(R.id.action_homeFragment_to_bookSearchFragment)
         }
 
         return binding.root
     }
+
 
 
 }

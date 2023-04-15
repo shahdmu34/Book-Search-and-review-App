@@ -23,9 +23,8 @@ class BookSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentBookSearchBinding
     private lateinit var viewModel: BookViewModel
-    private lateinit var bookList: ArrayList<BookViewModel>
-    private lateinit var search: EditText
-    private lateinit var searchBtn: Button
+    //private lateinit var searchBn : Button
+    //private lateinit var searchText :  EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,18 +38,13 @@ class BookSearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentBookSearchBinding.inflate(inflater,container,false)
-        search = binding.searchTv
-        searchBtn = binding.searchBtn
 
-        searchBtn.setOnClickListener { 
-            if(search.text.toString().isNullOrEmpty()){
-                search.setError("Please enter Search Correctly")
-            }
-            
-            getBookSearch(search.getText().toString())
-        }
+
+        binding.searchBtn.setOnClickListener { searchUpdate() }
         return binding.root
     }
+
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -58,80 +52,32 @@ class BookSearchFragment : Fragment() {
     }
 
 
-     fun getBookSearch(searchResult: String) {
+    private fun searchUpdate() {                   //function takes in the input and searches the api to find a match
 
-        bookList = ArrayList()
-        val urlb = "https://www.googleapis.com/books/v1/volumes?q=$searchResult"
+        val searchText = binding.searchTv.text.toString()        //fetching the input
+        var txtView = binding.textView.toString()
+
+        val bookUrl = "https://www.googleapis.com/books/v1/volumes?q=$searchText"
+
         val queue = Volley.newRequestQueue(activity?.applicationContext)
 
+        val stringRequest = StringRequest(
+            Method.GET, bookUrl,
+            Response.Listener<String>{ response ->
+                val bookArray : JSONArray = JSONArray(response)
 
-            val stringRequest = StringRequest(
-                Method.GET, urlb,
-                Response.Listener<String>{ response ->
-                   // val urlb = response.getString("url")
-                    val bookArray: JSONArray = JSONArray(response)
+                for(i in 0 until bookArray.length()){
+                    var theBook : JSONObject = bookArray.getJSONObject(i)
+                    val volumes : JSONObject = theBook.getJSONObject("volumeInfo")
 
-                    for(i in 0 until bookArray.length()) {
-                        var bk: JSONObject = bookArray.getJSONObject(i)
-
-                        val volume: JSONObject = bk.getJSONObject("volumeInfo")
-
-                        val bkTitle = volume.optString("title")
-                        Log.i("search", "book title" + bkTitle)
-                        val bkAuthors = volume.getJSONArray("authors")
-                        val bkdescription = volume.optString("description")
-                        val pageCount = volume.optInt("pageCount")
-                        val pubDay = volume.optString("publishedDate")
-                        val bkImage = volume.optJSONObject("imageLinks")
-                        val bkpic = bkImage.optString("thumbnail")
-
-                        val bkAuthorsList: ArrayList<String> = ArrayList()
-                        if (bkAuthors.length() != 0) {
-                            for (j in 0 until bkAuthors.length()) {
-                                bkAuthorsList.add(bkAuthors.optString(i))
-                            }
-                        }
-
-                        val bookData = bookRecycleVIew(
-                            bkTitle,
-                            bkAuthorsList,
-                            bkdescription,
-                            pageCount,
-                            pubDay,
-                            bkpic
-                        )
-
-                        /*
-
-                        bookList.add(viewModel)
-                        val adapter = recycleView(bookList, this)
-
-                        val layoutManager = GridLayoutManager(this, 3)
-                        //val rView = binding.Rvbooks
-                        val rview = binding.Rvbooks as RecyclerView
-
-                        rView.layoutManager = layoutManager
-                        rView.adapter = adapter
-
-                            */
-
-                        }
-
-
-
-
-
-
-
-                },
-                Response.ErrorListener {
-                    Log.i("search"," THAT DIDN'T WORK!!!!!!!!!!!!!!!")
+                    txtView = volumes.optString("title")
                 }
-            )
+            },Response.ErrorListener { Log.i("serchFragment", "THAT DIDN'T WORK!!") }
+
+        )
         queue.add(stringRequest)
 
     }
-
 
 }
 

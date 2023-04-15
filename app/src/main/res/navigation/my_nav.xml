@@ -9,20 +9,7 @@
         android:id="@+id/bookSearchFragment"
         android:name="com.example.project4_cis436.BookSearchFragment"
         android:label="fragment_book_search"
-        tools:layout="@layout/fragment_book_search" >
-        <action
-            android:id="@+id/action_bookSearchFragment_to_bookDescriptionFragment"
-            app:destination="@id/bookDescriptionFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/bookDescriptionFragment"
-        android:name="com.example.project4_cis436.bookDescriptionFragment"
-        android:label="fragment_book_description"
-        tools:layout="@layout/fragment_book_description" >
-        <action
-            android:id="@+id/action_bookDescriptionFragment_to_reviewFragment"
-            app:destination="@id/reviewFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_book_search" />
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.example.project4_cis436.ReviewFragment"
