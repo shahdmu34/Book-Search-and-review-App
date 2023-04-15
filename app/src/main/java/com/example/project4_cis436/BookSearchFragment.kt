@@ -68,9 +68,9 @@ class BookSearchFragment : Fragment() {
 
                 for(i in 0 until bookArray.length()){
                     var theBook : JSONObject = bookArray.getJSONObject(i)
-                    val volumes : JSONObject = theBook.getJSONObject("volumeInfo")
+                    //val volumes : JSONObject = theBook.getJSONObject("volumeInfo")
 
-                    txtView = volumes.optString("title")
+                   txtView = theBook.optString("title")
                 }
             },Response.ErrorListener { Log.i("serchFragment", "THAT DIDN'T WORK!!") }
 
