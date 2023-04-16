@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request.Method
 import com.android.volley.Response
@@ -23,9 +24,7 @@ class BookSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentBookSearchBinding
     private lateinit var viewModel: BookViewModel
-    //private lateinit var searchBn : Button
-    //private lateinit var searchText :  EditText
-
+    private lateinit var bookList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +35,14 @@ class BookSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentBookSearchBinding.inflate(inflater,container,false)
-
+        binding = FragmentBookSearchBinding.inflate(inflater, container, false)
 
         binding.searchBtn.setOnClickListener { searchUpdate() }
+
+        bookList = binding.bookRv
+        bookList.layoutManager = LinearLayoutManager(activity)
+        bookList.adapter = BookAdapter(emptyList()) // pass an empty list to start with
+
         return binding.root
     }
 
@@ -55,7 +57,6 @@ class BookSearchFragment : Fragment() {
     private fun searchUpdate() {                   //function takes in the input and searches the api to find a match
 
         val searchText = binding.searchTv.text.toString()        //fetching the input
-        var txtView = binding.textView.toString()
 
         val bookUrl = "https://www.googleapis.com/books/v1/volumes?q=$searchText"
 
@@ -64,15 +65,22 @@ class BookSearchFragment : Fragment() {
         val stringRequest = StringRequest(
             Method.GET, bookUrl,
             Response.Listener<String>{ response ->
-                val bookArray : JSONArray = JSONArray(response)
+                val bookObject : JSONObject = JSONObject(response)
+                val bookArray : JSONArray = bookObject.getJSONArray("items")
 
-                for(i in 0 until bookArray.length()){
-                    var theBook : JSONObject = bookArray.getJSONObject(i)
-                    //val volumes : JSONObject = theBook.getJSONObject("volumeInfo")
+                val books = mutableListOf<Book>()
 
-                   txtView = theBook.optString("title")
+                for (i in 0 until bookArray.length()) {
+                    val volume = bookArray.getJSONObject(i).getJSONObject("volumeInfo")
+                    val title = volume.getString("title")
+                    val author = volume.getJSONArray("authors").getString(0)
+                    books.add(Book(title, author))
                 }
-            },Response.ErrorListener { Log.i("serchFragment", "THAT DIDN'T WORK!!") }
+
+                val adapter = bookList.adapter as BookAdapter
+                adapter.books = books
+                adapter.notifyDataSetChanged()
+            },Response.ErrorListener { Log.i("searchFragment", "THAT DIDN'T WORK!!") }
 
         )
         queue.add(stringRequest)
