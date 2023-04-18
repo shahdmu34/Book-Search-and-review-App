@@ -74,7 +74,8 @@ class BookSearchFragment : Fragment() {
                     val volume = bookArray.getJSONObject(i).getJSONObject("volumeInfo")
                     val title = volume.getString("title")
                     val author = volume.getJSONArray("authors").getString(0)
-                    books.add(Book(title, author))
+                    val imageUrl = volume.getJSONObject("imageLinks").getString("thumbnail")
+                    books.add(Book(title, author, imageUrl))
                 }
 
                 val adapter = bookList.adapter as BookAdapter
