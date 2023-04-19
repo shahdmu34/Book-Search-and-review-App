@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 class BookAdapter(var books: List<Book>) :
     RecyclerView.Adapter<BookAdapter.ViewHolder>() {
@@ -27,9 +28,8 @@ class BookAdapter(var books: List<Book>) :
         val book = books[position]
         holder.titleTv.text = book.title
         holder.authorTv.text = book.author
-        Glide.with(holder.coverImageView.context)
-            .load(book.coverImage)
-            .into(holder.coverImageView)
+        Picasso.get().load(book.bookPic).into(holder.coverImageView)
+    //Glide.with(holder.coverImageView.context).load(book.bookPic).into(holder.coverImageView)
     }
 
     override fun getItemCount(): Int {

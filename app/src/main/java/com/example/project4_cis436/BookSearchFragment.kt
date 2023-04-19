@@ -71,11 +71,16 @@ class BookSearchFragment : Fragment() {
                 val books = mutableListOf<Book>()
 
                 for (i in 0 until bookArray.length()) {
+
                     val volume = bookArray.getJSONObject(i).getJSONObject("volumeInfo")
                     val title = volume.getString("title")
                     val author = volume.getJSONArray("authors").getString(0)
-                    val imageUrl = volume.getJSONObject("imageLinks").getString("thumbnail")
-                    books.add(Book(title, author, imageUrl))
+
+                    val imageurl = volume.getJSONObject("imageLinks")
+
+                    val bookPic  = imageurl.getString("thumbnail")
+                    Log.i("image display", "thumbnail: ${bookPic}")
+                    books.add(Book(title, author, bookPic))
                 }
 
                 val adapter = bookList.adapter as BookAdapter
