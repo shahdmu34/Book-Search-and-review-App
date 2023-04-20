@@ -28,8 +28,8 @@ class BookAdapter(var books: List<Book>) :
         val book = books[position]
         holder.titleTv.text = book.title
         holder.authorTv.text = book.author
-        Picasso.get().load(book.bookPic).into(holder.coverImageView)
-    //Glide.with(holder.coverImageView.context).load(book.bookPic).into(holder.coverImageView)
+      //  Picasso.get().load(book.bookPic).into(holder.coverImageView)
+        Glide.with(holder.coverImageView.context).load(book.bookPic).into(holder.coverImageView)
     }
 
     override fun getItemCount(): Int {

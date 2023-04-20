@@ -20,6 +20,7 @@ import com.example.project4_cis436.databinding.FragmentBookSearchBinding
 import org.json.JSONArray
 import org.json.JSONObject
 
+
 class BookSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentBookSearchBinding
@@ -94,4 +95,3 @@ class BookSearchFragment : Fragment() {
     }
 
 }
-
