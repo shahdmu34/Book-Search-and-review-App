@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -44,6 +45,12 @@ class BookSearchFragment : Fragment() {
         bookList.layoutManager = LinearLayoutManager(activity)
         bookList.adapter = BookAdapter(emptyList()) // pass an empty list to start with
 
+
+      //  val reviewButton = binding.reviewBtn
+
+     //   reviewButton.setOnClickListener {
+       //     findNavController().navigate(R.id.action_homeFragment_to_bookSearchFragment)
+        //}
         return binding.root
     }
 
@@ -76,12 +83,12 @@ class BookSearchFragment : Fragment() {
                     val volume = bookArray.getJSONObject(i).getJSONObject("volumeInfo")
                     val title = volume.getString("title")
                     val author = volume.getJSONArray("authors").getString(0)
-
+                    val description = volume.getString("description")
                     val imageurl = volume.getJSONObject("imageLinks")
 
                     val bookPic  = imageurl.getString("thumbnail")
                     Log.i("image display", "thumbnail: ${bookPic}")
-                    books.add(Book(title, author, bookPic))
+                    books.add(Book(title, author, bookPic,description ))
                 }
 
                 val adapter = bookList.adapter as BookAdapter
