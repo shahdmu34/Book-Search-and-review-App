@@ -46,11 +46,11 @@ class BookSearchFragment : Fragment() {
         bookList.adapter = BookAdapter(emptyList()) // pass an empty list to start with
 
 
-      //  val reviewButton = binding.reviewBtn
+        val reviewButton = binding.reviewBtn
 
-     //   reviewButton.setOnClickListener {
-       //     findNavController().navigate(R.id.action_homeFragment_to_bookSearchFragment)
-        //}
+       reviewButton.setOnClickListener {
+            findNavController().navigate(R.id.action_bookSearchFragment_to_reviewFragment)
+        }
         return binding.root
     }
 
