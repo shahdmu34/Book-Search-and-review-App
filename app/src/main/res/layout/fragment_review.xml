@@ -5,16 +5,18 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img_11"
+
     tools:context=".ReviewFragment" >
 
     <TextView
         android:id="@+id/ratingtv"
         android:layout_width="275dp"
         android:layout_height="45dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:text="Rating"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,9 +35,9 @@
         android:id="@+id/textView3"
         android:layout_width="117dp"
         android:layout_height="30dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="144dp"
         android:text="Status: "
-        android:textSize="16sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,13 +76,13 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="101dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="364dp"
+        android:layout_width="117dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="296dp"
         android:text="Review:"
-        android:textSize="16sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.051"
+        app:layout_constraintHorizontal_bias="0.054"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,6 +93,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Write a Review"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.421"
@@ -99,12 +102,24 @@
 
     <Button
         android:id="@+id/savBtn"
-        android:layout_width="378dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="20dp"
-        android:text="Save"
+        android:layout_width="404dp"
+        android:layout_height="133dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/savbtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/reviewText" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="112dp"
+        android:layout_height="117dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/img_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.983"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
