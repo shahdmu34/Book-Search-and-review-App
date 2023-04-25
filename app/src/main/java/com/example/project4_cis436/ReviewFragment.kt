@@ -9,67 +9,50 @@ import com.example.project4_cis436.databinding.FragmentBookSearchBinding
 import com.example.project4_cis436.databinding.FragmentReviewBinding
 import java.io.FileOutputStream
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.widget.Toast
+import android.widget.*
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import java.io.File
 import java.io.FileNotFoundException
 
 
 class ReviewFragment : Fragment() {
-    private lateinit var binding : FragmentReviewBinding
-
-
-
+    private lateinit var viewModel: ReviewViewModel
+    private lateinit var reviewTextView: TextView
+    private lateinit var saveButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = FragmentReviewBinding.inflate(inflater, container, false)
+        val view = inflater.inflate(R.layout.fragment_review, container, false)
+        reviewTextView = view.findViewById(R.id.reviewText)
+        saveButton = view.findViewById(R.id.savBtn)
+        viewModel = ViewModelProvider(requireActivity()).get(ReviewViewModel::class.java)
 
-        val saveButton = binding.savBtn
-
+        viewModel.getUserInput().observe(viewLifecycleOwner, Observer { userInput ->
+            reviewTextView.text = userInput
+        })
 
         saveButton.setOnClickListener {
-            var input = binding.reviewText.text.toString()
-
-
-            Log.i("review fragment", "review: ${input}")
-
-            //val file = "saveFile.txt"
-            val file = File(requireContext().filesDir, "saveFile.txt")         //set the file to the txt
-            if (!file.exists()) {                                                 //checks if its in the project files
-                file.createNewFile()
-            }
-
-            try {
-                val fileOutputStream = requireContext().openFileOutput(file.toString(), Context.MODE_PRIVATE)
-                fileOutputStream.write(input.toByteArray())                   //writes to the file
-                fileOutputStream.close()
-
-                Log.i("review fragment", "Review saved to file.")
-
-            }catch(e : FileNotFoundException){
-                e.printStackTrace()
-            }catch(e: Exception){
-                e.printStackTrace()
-            }
-
-
-
-
+            val userInput = reviewTextView.text.toString()
+            viewModel.setUserInput(userInput)
+            Toast.makeText(context, "Review saved!", Toast.LENGTH_SHORT).show()
         }
 
-
-        return binding.root
+        return view
     }
 
 
+
 }
+
+
 
