@@ -1,2 +1,2 @@
-# Project4-Cis436
+# Book Search and review App
 Shahd Mustafa and Zeinab Obeid
